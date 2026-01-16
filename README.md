@@ -10,6 +10,12 @@ This project demonstrates:
 - **Domain Adaptation**: Specializing a general LLM for genetic research terminology
 - **Evaluation Pipeline**: Measuring BLEU, ROUGE, and domain-specific terminology accuracy
 
+## Links
+
+- **Model**: [sachinbkale27/genetics-llm-lora-v1](https://huggingface.co/sachinbkale27/genetics-llm-lora-v1)
+- **Dataset**: [sachinbkale27/genetics-qa](https://huggingface.co/datasets/sachinbkale27/genetics-qa)
+- **GitHub**: [sachinbkale27/genetic-llm](https://github.com/sachinbkale27/genetic-llm)
+
 ## Project Structure
 
 ```
@@ -52,15 +58,35 @@ python data/preprocess.py
 
 ### 3. Run Inference
 
-```bash
-# Interactive mode (no fine-tuning, base model only)
-python inference/query.py
+```python
+# Load from HuggingFace
+from unsloth import FastLanguageModel
 
+model, tokenizer = FastLanguageModel.from_pretrained(
+    "sachinbkale27/genetics-llm-lora-v1",
+    max_seq_length=2048,
+    load_in_4bit=True,
+)
+FastLanguageModel.for_inference(model)
+
+# Ask a question
+messages = [
+    {"role": "system", "content": "You are a genetic research assistant."},
+    {"role": "user", "content": "What is CRISPR-Cas9?"}
+]
+inputs = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors="pt").to("cuda")
+outputs = model.generate(input_ids=inputs, max_new_tokens=256, temperature=0.7)
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))
+```
+
+Or use the CLI:
+
+```bash
 # With fine-tuned adapters
-python inference/query.py --adapter path/to/genetic-llm-lora
+python inference/query.py --adapter sachinbkale27/genetics-llm-lora-v1
 
 # Single question
-python inference/query.py --adapter path/to/genetic-llm-lora \
+python inference/query.py --adapter sachinbkale27/genetics-llm-lora-v1 \
     --question "What is the role of CRISPR-Cas9 in gene editing?"
 ```
 

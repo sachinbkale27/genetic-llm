@@ -41,6 +41,23 @@ env/
 data/*.json
 !data/.gitkeep
 
+# Data scripts (keep local only)
+data/download_all.py
+data/download_pubmedqa.py
+data/extract_genetics_data.py
+data/upload_to_hf.py
+data/merge_datasets.py
+
+# Training notebooks (keep local only)
+training/finetune_a100.ipynb
+
+# Docs (keep local only)
+docs/architecture.jpg
+docs/generate_architecture.py
+
+# Other local files
+future-training-instructions-my-urls.txt
+
 # Model outputs
 outputs/
 *.pt

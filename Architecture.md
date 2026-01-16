@@ -10,15 +10,15 @@ End-to-end LLM fine-tuning for domain-specific Q&A in genetic research.
 
 Fine-tunes a small language model (Qwen2-1.5B) to answer questions about genetics, molecular biology, and genomics — topics like CRISPR, DNA methylation, gene expression, mutations, and inheritance.
 
-## Why It's Portfolio-Worthy
+## Path for Implementation
 
-| Skill Demonstrated | Implementation |
-|-------------------|----------------|
-| **Data Engineering** | Multi-source pipeline aggregating 89k samples from PubMedQA, MMLU, MedMCQA, SciQ |
+| Path                   | Implementation |
+|------------------------|----------------|
+| **Data Engineering**   | Multi-source pipeline aggregating 89k samples from PubMedQA, MMLU, MedMCQA, SciQ |
 | **Efficient Training** | QLoRA (4-bit quantization + LoRA) — runs on free Colab T4 GPU |
-| **Domain Adaptation** | Filtering and preprocessing for genetics-specific terminology |
-| **MLOps** | Dataset hosted on HuggingFace Hub, reproducible training notebook |
-| **Evaluation** | BLEU, ROUGE, and domain-specific terminology metrics |
+| **Domain Adaptation**  | Filtering and preprocessing for genetics-specific terminology |
+| **MLOps**              | Dataset hosted on HuggingFace Hub, reproducible training notebook |
+| **Evaluation**         | BLEU, ROUGE, and domain-specific terminology metrics |
 
 ## Project Structure
 
@@ -37,14 +37,22 @@ genetic-llm/
 └── README.md
 ```
 
+## Training Dashboard
+
+![Training Dashboard](docs/genetic-llm-training-dashboard.png)
+
+Training metrics tracked via Weights & Biases showing loss convergence, learning rate schedule, and GPU utilization during fine-tuning on A100.
+
 ## Tech Stack
 
 - **Base Model**: Qwen2-1.5B-Instruct (Apache 2.0)
 - **Training**: Unsloth + QLoRA + TRL's SFTTrainer
 - **Data**: HuggingFace Datasets
-- **Infra**: Google Colab (free tier)
+- **Tracking**: Weights & Biases
+- **Infra**: Google Colab (A100/T4)
 
 ## Links
 
-- **GitHub**: https://github.com/sachinbkale27/genetic-llm
+- **Model**: https://huggingface.co/sachinbkale27/genetics-llm-lora-v1
 - **Dataset**: https://huggingface.co/datasets/sachinbkale27/genetics-qa
+- **GitHub**: https://github.com/sachinbkale27/genetic-llm
